@@ -34,4 +34,28 @@ def LowerVectorMultiReduction : Pass<"lower-vector-multi-reduction", "func::Func
   ];
 }
 
+def LowerToTileVector : Pass<"lower-to-tile-vector"> {
+  let summary = "Lower Operation to vector.";
+  let dependentDialects = [
+    "::mlir::func::FuncDialect",
+    "::mlir::math::MathDialect",
+    "::mlir::arith::ArithDialect",
+    "::mlir::tensor::TensorDialect",
+    "::mlir::linalg::LinalgDialect",
+    "::mlir::vector::VectorDialect",
+  ];
+}
+
+def TilingVectorPass : Pass<"tiling-vector-pass", "func::FuncOp"> {
+  let summary = "Tiling vector to pysical register size.";
+  let dependentDialects = [
+    "::mlir::func::FuncDialect",
+    "::mlir::math::MathDialect",
+    "::mlir::arith::ArithDialect",
+    "::mlir::tensor::TensorDialect",
+    "::mlir::vector::VectorDialect",
+    "::mlir::scf::SCFDialect",
+  ];
+}
+
 #endif // MLIR_DIALECT_VECTOR_TRANSFORMS_PASSES
